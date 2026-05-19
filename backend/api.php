@@ -8,16 +8,24 @@ $allowed_origins = [
     // === DOMAIN DEVELOPMENT (Lokal) ===
     'http://localhost:3000', 
     'http://localhost:5000', 
+    'http://localhost:8000',
+    'http://localhost:8080',
+    'http://localhost:5500',
+    'http://localhost:5501',
     'http://127.0.0.1:3000', 
     'http://127.0.0.1:5000',
-    'http://localhost:8000' 
+    'http://127.0.0.1:8000',
+    'http://127.0.0.1:8080',
+    'http://127.0.0.1:5500',
+    'http://127.0.0.1:5501',
 ];
 
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 
-// Jika tidak ada origin (misal ditembak langsung via CURL/Postman tanpa origin header)
-// atau Origin terdaftar di whitelist, kita izinkan.
-if ($origin === '' || in_array($origin, $allowed_origins)) {
+// Izinkan semua localhost/127.0.0.1 untuk development
+$isLocalhost = preg_match('/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/', $origin);
+
+if ($origin === '' || in_array($origin, $allowed_origins) || $isLocalhost) {
     if ($origin !== '') {
         header("Access-Control-Allow-Origin: $origin");
     }

@@ -1,6 +1,6 @@
 // API URL base
-const API_BASE = 'http://localhost:8000/api.php';
-const UPLOAD_BASE = 'http://localhost:8000/uploads';
+const API_BASE = 'http://localhost/E-katalog-1/backend/api.php';
+const UPLOAD_BASE = 'http://localhost/E-katalog-1/backend/uploads';
 const API_KEY = 'ekatalog-secure-token-123'; // Token keamanan dasar
 
 async function requestApi(url, options = {}) {
@@ -298,7 +298,6 @@ async function handleAddProduk(event) {
   const harga = parseFloat(hargaRaw);
   const stok = parseInt(document.getElementById('stok-produk').value, 10);
   const kategori_id = document.getElementById('kategori-produk').value;
-  const deskripsi = document.getElementById('deskripsi-produk').value.trim();
 
   if (!nama || isNaN(harga) || isNaN(stok) || !kategori_id) {
     Swal.fire({ icon: 'warning', title: 'Perhatian', text: 'Nama, harga, stok, dan kategori harus diisi dengan benar.', background: '#1a1a1a', color: '#fff', confirmButtonColor: '#f39c12' });
@@ -310,7 +309,6 @@ async function handleAddProduk(event) {
   formData.append('harga', harga);
   formData.append('stok', stok);
   formData.append('kategori_id', kategori_id);
-  if (deskripsi) formData.append('deskripsi', deskripsi);
 
   await buildGambarFormData(formData);
   const result = await addProduk(formData);
@@ -372,7 +370,6 @@ async function loadProdukForEdit() {
 
   document.getElementById('nama-produk').value = product.nama_produk || '';
   document.getElementById('stok-produk').value = product.stok || '';
-  document.getElementById('deskripsi-produk').value = product.deskripsi || '';
 
   // Format harga dengan titik setiap 3 digit
   const hargaEl = document.getElementById('harga-produk');
@@ -431,7 +428,6 @@ async function handleUpdateProduk(event) {
   const harga = parseFloat(hargaRaw);
   const stok = parseInt(document.getElementById('stok-produk').value, 10);
   const kategori_id = document.getElementById('kategori-produk').value;
-  const deskripsi = document.getElementById('deskripsi-produk').value.trim();
 
   if (!nama || isNaN(harga) || isNaN(stok) || !kategori_id) {
     Swal.fire({ icon: 'warning', title: 'Perhatian', text: 'Nama, harga, stok, dan kategori harus diisi dengan benar.', background: '#1a1a1a', color: '#fff', confirmButtonColor: '#f39c12' });
@@ -444,7 +440,6 @@ async function handleUpdateProduk(event) {
   formData.append('harga', harga);
   formData.append('stok', stok);
   formData.append('kategori_id', kategori_id);
-  if (deskripsi) formData.append('deskripsi', deskripsi);
 
   await buildGambarFormData(formData);
 
