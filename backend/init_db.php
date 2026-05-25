@@ -57,7 +57,23 @@ try {
         FOREIGN KEY (id_kategori) REFERENCES tb_kategori(id_kategori) ON DELETE CASCADE
     )");
     echo "✓ Tabel tb_produk_kategori berhasil dibuat\n";
-    
+
+    // Migrasi: tambah kolom yang mungkin hilang di database lama
+    $columnsToAdd = [
+        'tb_produk' => [
+            'gambar' => 'TEXT DEFAULT NULL',
+        ],
+    ];
+    foreach ($columnsToAdd as $table => $cols) {
+        $existing = $db->query("PRAGMA table_info($table)")->fetchAll(PDO::FETCH_COLUMN, 1);
+        foreach ($cols as $col => $def) {
+            if (!in_array($col, $existing)) {
+                $db->exec("ALTER TABLE $table ADD COLUMN $col $def");
+                echo "✓ Kolom $table.$col berhasil ditambahkan\n";
+            }
+        }
+    }
+
     // Cek apakah sudah ada data kategori
     $stmt = $db->query("SELECT COUNT(*) FROM tb_kategori");
     $count = $stmt->fetchColumn();

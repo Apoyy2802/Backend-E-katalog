@@ -1,7 +1,8 @@
 <?php
 // === KONFIGURASI KEAMANAN DASAR (RESTRIKSI AKSES) ===
 $allowed_origins = [
-    // === DOMAIN PRODUKSI (Tambahkan domain Anda nanti di sini) ===
+    // === DOMAIN PRODUKSI ===
+    'https://fe-e-katalog.netlify.app',
     'https://e-katalog-frontend-saya.com',
     'https://www.e-katalog-frontend-saya.com',
     
@@ -19,6 +20,15 @@ $allowed_origins = [
     'http://127.0.0.1:5500',
     'http://127.0.0.1:5501',
 ];
+
+// Tambah domain dari env CORS_ORIGINS (dipisah koma)
+$envOrigins = getenv('CORS_ORIGINS');
+if ($envOrigins) {
+    foreach (explode(',', $envOrigins) as $o) {
+        $o = trim($o);
+        if ($o !== '') $allowed_origins[] = $o;
+    }
+}
 
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 
