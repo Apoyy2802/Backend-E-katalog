@@ -1,0 +1,17 @@
+.git
+.gitignore
+.gitattributes
+.dockerignore
+.vscode
+.idea
+*.md
+CHANGELOG.md
+docs
+workflows
+.claude
+.github
+node_modules
+*.log
+*.tmp
+*.swp
+.gitkeep

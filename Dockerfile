@@ -1,12 +1,13 @@
 FROM php:8.2-cli
 
-# Install PDO MySQL extension
-RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install pdo_mysql pdo_sqlite
 
 WORKDIR /app
 
-COPY backend/ ./backend/
+COPY . .
+
+RUN mkdir -p data backend/uploads && chmod +x /app/start.sh
 
 EXPOSE ${PORT:-8080}
 
-CMD php -S 0.0.0.0:${PORT:-8080} -t backend
+CMD ["/app/start.sh"]

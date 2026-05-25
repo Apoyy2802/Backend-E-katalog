@@ -1,6 +1,6 @@
 // API URL base
-const API_BASE = 'http://localhost/E-katalog-1/backend/api.php';
-const UPLOAD_BASE = 'http://localhost/E-katalog-1/backend/uploads';
+const API_BASE = '/api.php';
+const UPLOAD_BASE = '/uploads';
 const API_KEY = 'ekatalog-secure-token-123'; // Token keamanan dasar
 
 async function requestApi(url, options = {}) {
