@@ -57,20 +57,31 @@ if ($apiKey !== API_SECRET_KEY) {
 // ===================================================
 
 function createConnection() {
-    $dbHost = getenv('DB_HOST') ?: 'localhost';
-    $dbName = getenv('DB_NAME') ?: 'e_katalog';
-    $dbUser = getenv('DB_USER') ?: 'root';
-    $dbPass = getenv('DB_PASS') ?: '';
-    $dbCharset = getenv('DB_CHARSET') ?: 'utf8mb4';
-
-    $dsn = "mysql:host=$dbHost;dbname=$dbName;charset=$dbCharset";
+    $driver = getenv('DB_DRIVER') ?: 'sqlite';
 
     try {
-        $db = new PDO($dsn, $dbUser, $dbPass, [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES => false,
-        ]);
+        if ($driver === 'mysql') {
+            $dbHost = getenv('DB_HOST') ?: 'localhost';
+            $dbName = getenv('DB_NAME') ?: 'e_katalog';
+            $dbUser = getenv('DB_USER') ?: 'root';
+            $dbPass = getenv('DB_PASS') ?: '';
+            $dbCharset = getenv('DB_CHARSET') ?: 'utf8mb4';
+            $dsn = "mysql:host=$dbHost;dbname=$dbName;charset=$dbCharset";
+            $db = new PDO($dsn, $dbUser, $dbPass, [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => false,
+            ]);
+        } else {
+            $dbPath = getenv('DB_PATH') ?: __DIR__ . '/../data/e_katalog.db';
+            $dsn = "sqlite:$dbPath";
+            $db = new PDO($dsn, null, null, [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            ]);
+            $db->exec("PRAGMA journal_mode=WAL");
+            $db->exec("PRAGMA foreign_keys=ON");
+        }
         return $db;
     } catch (Exception $e) {
         http_response_code(500);
@@ -237,7 +248,7 @@ function updateProduk($db, $id, $data) {
         // Debug logging
         error_log("Update Produk ID: $id | Current Image: " . ($currentImage ?? 'NULL') . " | Uploaded: " . ($uploadedImage ?? 'NULL') . " | Final: " . ($gambar ?? 'NULL'));
 
-        $stmt = $db->prepare("UPDATE tb_produk SET nama_produk = ?, harga = ?, stok = ?, deskripsi = ?, gambar = ? WHERE id_produk = ?");
+        $stmt = $db->prepare("UPDATE tb_produk SET nama_produk = ?, harga = ?, stok = ?, deskripsi = ?, gambar = ?, updated_at = CURRENT_TIMESTAMP WHERE id_produk = ?");
         $deskripsi = $data['deskripsi'] ?? '';
         $stmt->execute([
             trim($data['nama_produk']),
