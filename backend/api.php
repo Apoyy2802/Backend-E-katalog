@@ -8,6 +8,8 @@ $allowed_origins = [
     // Netlify (frontend deploy)
     'https://fe-e-katalog.netlify.app',
     'https://www.fe-e-katalog.netlify.app',
+    'https://backend-e-katalog.vercel.app',
+    'https://sytem-e-katalog.vercel.app',
     
     // === DOMAIN DEVELOPMENT (Lokal) ===
     'http://localhost:3000', 
