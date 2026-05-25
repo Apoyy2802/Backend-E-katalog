@@ -1,6 +1,10 @@
-// API URL base
-const API_BASE = '/api.php';
-const UPLOAD_BASE = '/uploads';
+// API URL base — ganti API_HOST dengan URL Railway kamu untuk production
+const API_HOST = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:8000'
+  : 'https://backend-e-katalog-production.up.railway.app';
+
+const API_BASE = API_HOST + '/api.php';
+const UPLOAD_BASE = API_HOST + '/uploads';
 const API_KEY = 'ekatalog-secure-token-123'; // Token keamanan dasar
 
 async function requestApi(url, options = {}) {
