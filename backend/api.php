@@ -5,6 +5,9 @@ $allowed_origins = [
     'https://fe-e-katalog.netlify.app',
     'https://e-katalog-frontend-saya.com',
     'https://www.e-katalog-frontend-saya.com',
+    // Netlify (frontend deploy)
+    'https://fe-e-katalog.netlify.app',
+    'https://www.fe-e-katalog.netlify.app',
     
     // === DOMAIN DEVELOPMENT (Lokal) ===
     'http://localhost:3000', 
