@@ -3,6 +3,7 @@
 $allowed_origins = [
     // === DOMAIN PRODUKSI ===
     'https://backend-e-katalog.vercel.app',
+    'https://sytem-e-katalog.vercel.app',
     
     // === DOMAIN DEVELOPMENT (Lokal) ===
     'http://localhost:3000', 
