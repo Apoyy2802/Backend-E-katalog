@@ -2,6 +2,13 @@
 $uri = $_SERVER['REQUEST_URI'];
 $path = parse_url($uri, PHP_URL_PATH);
 
+// Health check (public, no auth required)
+if ($path === '/health') {
+    header('Content-Type: application/json');
+    echo json_encode(['status' => 'ok']);
+    return true;
+}
+
 // API
 if ($path === '/api.php') {
     require __DIR__ . '/backend/api.php';

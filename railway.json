@@ -6,7 +6,7 @@
   "deploy": {
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 3,
-    "healthcheckPath": "/api.php?action=fetchKategori",
+    "healthcheckPath": "/health",
     "healthcheckTimeout": 30
   }
 }
