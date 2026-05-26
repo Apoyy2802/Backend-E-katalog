@@ -2,14 +2,11 @@
 // === KONFIGURASI KEAMANAN DASAR (RESTRIKSI AKSES) ===
 $allowed_origins = [
     // === DOMAIN PRODUKSI ===
-    'https://fe-e-katalog.netlify.app',
-    'https://e-katalog-frontend-saya.com',
-    'https://www.e-katalog-frontend-saya.com',
     // Netlify (frontend deploy)
     'https://fe-e-katalog.netlify.app',
     'https://www.fe-e-katalog.netlify.app',
     'https://backend-e-katalog.vercel.app',
-    'https://sytem-e-katalog.vercel.app',
+    'https://system-e-katalog.vercel.app',
     
     // === DOMAIN DEVELOPMENT (Lokal) ===
     'http://localhost:3000', 
