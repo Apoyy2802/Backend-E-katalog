@@ -4,8 +4,6 @@ $allowed_origins = [
     // === DOMAIN PRODUKSI ===
     // Netlify (frontend deploy)
     'https://fe-e-katalog.netlify.app',
-    'https://www.fe-e-katalog.netlify.app',
-    'https://backend-e-katalog.vercel.app',
     'https://system-e-katalog.vercel.app',
     
     // === DOMAIN DEVELOPMENT (Lokal) ===
@@ -48,14 +46,16 @@ if ($origin === '' || in_array($origin, $allowed_origins) || $isLocalhost) {
     exit();
 }
 
-header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, X-Api-Key');
+header('Access-Control-Allow-Origin: https://fe-e-katalog.netlify.app');
+header('Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: X-Api-Key, Content-Type');
+header('Access-Control-Allow-Credentials: true');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit();
 }
+
 
 // Token Rahasia API
 define('API_SECRET_KEY', 'ekatalog-secure-token-123');
